@@ -2,8 +2,8 @@
 
 ### *Data Structures Lab Project | C++ Console Application*
 
-> A fully functional console-based social networking platform developed using core **Data Structures & Algorithms** concepts in **C++**.
-> This project demonstrates how real-world applications can be built using fundamental DSA concepts like Hash Tables, Graphs, AVL Trees, Queues, Stacks, and Linked Lists.
+A fully functional console-based social networking platform developed using core **Data Structures & Algorithms** concepts in **C++**.
+This project demonstrates how real-world applications can be built using fundamental DSA concepts like Hash Tables, Graphs, AVL Trees, Queues, Stacks, and Linked Lists.
 
 ---
 
@@ -185,10 +185,15 @@ Run the program and enjoy 🚀
 This project helped us understand:
 
 ✅ Practical implementation of Data Structures
+
 ✅ Real-world problem solving using DSA
+
 ✅ Efficient data management
+
 ✅ Memory handling in C++
+
 ✅ System design concepts
+
 ✅ File handling & persistent storage
 
 ---
@@ -201,12 +206,3 @@ This project helped us understand:
 
 
 
-# ⭐ Final Note
-
-> “Data Structures are the backbone of efficient software systems.”
-
----
-
-## 📌 BS Computer Science
-
-### Data Structures Lab Project
