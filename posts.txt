@@ -1,0 +1,5 @@
+POST1|Good morning everyone.|user1|12
+POST2|Busy day today.|user2|7
+POST3|Working hard.|user3|15
+POST4|Teaching class today.|user4|9
+POST5|Coding project done.|user5|20
