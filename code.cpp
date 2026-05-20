@@ -288,7 +288,7 @@ string getCurrentTimestamp() {
     time_t now = time(0);
     char* dt = ctime(&now);
     string timestamp(dt);
-    timestamp.pop_back(); 
+    timestamp.pop_back();
     return timestamp;
 }
 // UPDATE THE LAST ACTIVE TIME OF A USER
@@ -313,6 +313,7 @@ void registerUser() {
             cout << "\033[31mUsername already exists.\033[0m" << endl;
             cout << "\033[34mChoose another.\033[0m" << endl;
             cout << endl;
+            Sleep(500);
             return;
         }
         t = t->next;
@@ -365,6 +366,7 @@ void registerUser() {
     Beep(850, 120);
     cout << "\033[1;32mRegistered! Please login.\033[0m" << endl;
     cout << endl;
+    Sleep(500);
     saveUsersToFile();
 }
 // LOG AN EXISTING USER INTO THE SYSTEM
@@ -387,6 +389,7 @@ void loginUser() {
             Beep(1000, 200);
             cout << "\033[1;32mWelcome " << un << ".\033[0m" << endl;
             cout << endl;
+            Sleep(500);
             return;
         }
         t = t->next;
@@ -396,6 +399,7 @@ void loginUser() {
     Beep(700, 400);
     cout << "\033[31mInvalid credentials.\033[0m" << endl;
     cout << endl;
+    Sleep(500);
 }
 // LOG OUT THE CURRENTLY LOGGED-IN USER
 void logoutUser() {
@@ -404,6 +408,7 @@ void logoutUser() {
         system("cls");
         cout << "\033[31mNo user logged in.\033[0m" << endl;
         cout << endl;
+        Sleep(500);
         return;
     }
     cout << endl;
@@ -411,6 +416,7 @@ void logoutUser() {
     Beep(800, 200);
     cout << "\033[33mGoodbye " << currentUser->userName << ".\033[0m" << endl;
     cout << endl;
+    Sleep(500);
     currentUser = nullptr;
 }
 // SEARCH FOR A USER BY USERNAME AND DISPLAY THEIR INFO
@@ -429,6 +435,7 @@ void searchUser() {
             Beep(900, 150);
             cout << "\033[92mFound: " << t->userName << " | Email: " << t->email << " | Bio: " << t->bio << " | Active: " << t->lastActive << "\033[0m" << endl;
             cout << endl;
+            Sleep(500);
             return;
         }
         t = t->next;
@@ -438,6 +445,7 @@ void searchUser() {
     Beep(700, 300);
     cout << "\033[31mNot found.\033[0m" << endl;
     cout << endl;
+    Sleep(500);
 }
 // DISPLAY ALL REGISTERED USERS IN THE SYSTEM
 void displayAllUsers() {
@@ -453,10 +461,11 @@ void displayAllUsers() {
         }
     }
     if (!any) {
-        system("cls");
         cout << "\033[33mNo users.\033[0m" << endl;
     }
     cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // ADD A FRIEND EDGE FROM ONE USER TO ANOTHER
 void addFriendEdge(UserNode* user, string friendName) {
@@ -471,7 +480,7 @@ void addFriendEdge(UserNode* user, string friendName) {
     nf->next = user->friendsHead;
     user->friendsHead = nf;
 }
-// REMOVE A FRIEND EDGE FROM ONE USER TO ANOTHER 
+// REMOVE A FRIEND EDGE FROM ONE USER TO ANOTHER
 void removeFriendEdge(UserNode* user, string friendName) {
     FriendNode* prev = nullptr;
     FriendNode* cur = user->friendsHead;
@@ -495,6 +504,7 @@ void addFriend() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string fn;
@@ -504,11 +514,13 @@ void addFriend() {
     if (!checkUserExists(fn)) {
         system("cls");
         cout << "\033[31mNo such user.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     if (fn == currentUser->userName) {
         system("cls");
         cout << "\033[31mCannot add self.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     addFriendEdge(currentUser, fn);
@@ -523,13 +535,15 @@ void addFriend() {
     Beep(950, 150);
     system("cls");
     cout << "\033[1;32mFriend added.\033[0m" << endl;
+    Sleep(500);
     saveFriendsToFile();
 }
-// REMOVE A FRIEND RELATIONSHIP 
+// REMOVE A FRIEND RELATIONSHIP
 void removeFriend() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string fn;
@@ -544,6 +558,7 @@ void removeFriend() {
     system("cls");
     Beep(800, 200);
     cout << "\033[1;32mRemoved.\033[0m" << endl;
+    Sleep(500);
     saveFriendsToFile();
 }
 // DISPLAY ALL FRIENDS OF THE CURRENT USER
@@ -551,29 +566,33 @@ void displayFriends() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     system("cls");
     cout << "\n\033[1;36m--- YOUR FRIENDS ---\033[0m" << endl;
     FriendNode* f = currentUser->friendsHead;
     if (!f) {
-        system("cls");
         cout << "\033[33mNo friends.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     int c = 0;
-    system("cls");
     while (f) {
         cout << "\033[92m" << ++c << ". " << f->friendUserName << "\033[0m" << endl;
         f = f->next;
     }
     cout << "\033[93mTotal: " << c << "\033[0m" << endl;
+    cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // PERFORM BREADTH-FIRST SEARCH FROM A START USER
 void BFS(string startUser) {
     if (!checkUserExists(startUser)) {
         system("cls");
         cout << "\033[31mUser not exist.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string q[1000];
@@ -610,6 +629,9 @@ void BFS(string startUser) {
         }
     }
     cout << endl;
+    cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // RECURSIVE HELPER FOR DEPTH-FIRST SEARCH
 void DFSHelper(string cur, string target, string visited[], int& vc, bool& found) {
@@ -619,7 +641,6 @@ void DFSHelper(string cur, string target, string visited[], int& vc, bool& found
         }
     }
     visited[vc++] = cur;
-    system("cls");
     cout << "\033[92m" << cur << " \033[0m";
     if (cur == target) {
         found = true;
@@ -643,6 +664,7 @@ void DFS(string startUser, string targetUser) {
     if (!checkUserExists(startUser) || !checkUserExists(targetUser)) {
         system("cls");
         cout << "\033[31mUser not exist.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string visited[1000];
@@ -660,6 +682,9 @@ void DFS(string startUser, string targetUser) {
         Beep(700, 250);
         cout << "\033[33mNot reachable.\033[0m" << endl;
     }
+    cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // ADD A POST TO THE GLOBAL FEED
 void addToFeedList(PostNode* post) {
@@ -724,6 +749,7 @@ void createPost() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string content;
@@ -742,6 +768,7 @@ void createPost() {
     system("cls");
     Beep(1000, 200);
     cout << "\033[1;32mPost created. ID: " << pid << "\033[0m" << endl;
+    Sleep(500);
     savePostsToFile();
 }
 // DELETE A POST OWNED BY THE CURRENT USER
@@ -749,6 +776,7 @@ void deletePost() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string pid;
@@ -771,27 +799,33 @@ void deletePost() {
                 cur->next->prev = cur->prev;
             }
             delete cur;
+            system("cls");
             Beep(850, 180);
             cout << "\033[1;32mDeleted.\033[0m" << endl;
+            Sleep(500);
             savePostsToFile();
             return;
         }
         cur = cur->next;
     }
+    system("cls");
     Beep(700, 250);
     cout << "\033[31mNot found or not yours.\033[0m" << endl;
+    Sleep(500);
 }
 // DISPLAY ALL POSTS OF THE CURRENT USER
 void displayMyPosts() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     PostNode* p = currentUser->postsHead;
     if (!p) {
         system("cls");
         cout << "\033[33mNo posts.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     int cnt = 0;
@@ -800,12 +834,16 @@ void displayMyPosts() {
         cout << "\033[93m[" << ++cnt << "] \033[96m" << p->postID << "\033[0m : " << p->content << " \033[35m(Likes: " << p->likes << ")\033[0m" << endl;
         p = p->next;
     }
+    cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // LIKE A POST
 void likePost() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string pid;
@@ -816,18 +854,24 @@ void likePost() {
     string owner;
     PostNode* p = findPost(pid, owner);
     if (!p) {
+        system("cls");
         cout << "\033[31mPost not found.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     if (owner == currentUser->userName) {
+        system("cls");
         cout << "\033[33mCannot like own post.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     p->likes++;
     updatePostLikesInAVL(pid, p->likes);
     sendLikeNotification(owner, currentUser->userName);
+    system("cls");
     Beep(1000, 150);
     cout << "\033[1;32mLiked! Now " << p->likes << " likes.\033[0m" << endl;
+    Sleep(500);
     savePostsToFile();
 }
 // INTERACTIVE FEED NAVIGATION
@@ -835,11 +879,13 @@ void navigateFeed() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     if (!feedHead) {
         system("cls");
         cout << "\033[33mNo posts.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     if (!feedCurrent) {
@@ -906,6 +952,7 @@ void addStory() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string cont;
@@ -925,8 +972,10 @@ void addStory() {
         t->next = ns;
         ns->next = storiesHead;
     }
+    system("cls");
     Beep(950, 180);
     cout << "\033[1;32mStory added.\033[0m" << endl;
+    Sleep(500);
     saveStoriesToFile();
 }
 // VIEW ALL STORIES IN A CIRCULAR MANNER
@@ -934,6 +983,7 @@ void viewStories() {
     if (!storiesHead) {
         system("cls");
         cout << "\033[33mNo stories.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     system("cls");
@@ -955,6 +1005,7 @@ void viewStories() {
         cur = cur->next;
         if (!first && cur == start) {
             cout << "\033[33mAll stories viewed.\033[0m" << endl;
+            Sleep(500);
             break;
         }
         first = false;
@@ -1012,11 +1063,12 @@ void enqueueNotification(string msg, string un) {
     }
     saveNotificationsToFile();
 }
-// REMOVE AND PROCESS THE FRONT NOTIFICATION 
+// REMOVE AND PROCESS THE FRONT NOTIFICATION
 void dequeueNotification() {
     if (!notificationFront) {
         system("cls");
         cout << "\033[33mNo notifications.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     NotificationNode* tmp = notificationFront;
@@ -1028,6 +1080,7 @@ void dequeueNotification() {
         notificationRear = nullptr;
     }
     delete tmp;
+    Sleep(500);
     saveNotificationsToFile();
 }
 // PEEK AT THE FRONT NOTIFICATION WITHOUT REMOVING IT
@@ -1035,10 +1088,13 @@ void peekNotification() {
     if (!notificationFront) {
         system("cls");
         cout << "\033[33mNo notifications.\033[0m" << endl;
+        Sleep(500);
     }
     else {
+        system("cls");
         Beep(700, 120);
         cout << "\033[1;36mOldest: " << notificationFront->message << " for " << notificationFront->userName << "\033[0m" << endl;
+        Sleep(500);
     }
 }
 // DISPLAY ALL NOTIFICATIONS FOR THE CURRENT USER
@@ -1046,11 +1102,13 @@ void displayNotifications() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     if (!notificationFront) {
         system("cls");
         cout << "\033[33mNo notifications.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     system("cls");
@@ -1066,6 +1124,9 @@ void displayNotifications() {
     if (!c) {
         cout << "\033[33mNone.\033[0m" << endl;
     }
+    cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // SEND A NOTIFICATION WHEN A POST IS LIKED
 void sendLikeNotification(string owner, string liker) {
@@ -1104,20 +1165,24 @@ void sendMessage() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string rec, txt;
+    system("cls");
     cout << "\033[34mReceiver: \033[0m";
     cin >> rec;
     cin.ignore(1000, '\n');
     if (!checkUserExists(rec)) {
         system("cls");
         cout << "\033[31mNo such user.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     if (rec == currentUser->userName) {
         system("cls");
         cout << "\033[31mCannot self message.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     cout << "\033[34mMessage: \033[0m";
@@ -1126,8 +1191,10 @@ void sendMessage() {
     Conversation* conv = getOrCreateConversation(currentUser->userName, rec);
     nm->next = conv->stackTop;
     conv->stackTop = nm;
+    system("cls");
     Beep(1000, 150);
     cout << "\033[1;32mSent.\033[0m" << endl;
+    Sleep(500);
     sendMessageNotification(rec, currentUser->userName);
     saveMessagesToFile();
 }
@@ -1136,41 +1203,55 @@ void viewLatestMessage() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string other;
+    system("cls");
     cout << "\033[34mWith whom: \033[0m";
     cin >> other;
     cin.ignore(1000, '\n');
     Conversation* conv = findConversation(currentUser->userName, other);
     if (!conv || !conv->stackTop) {
+        system("cls");
         cout << "\033[33mNo messages.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     MessageNode* top = conv->stackTop;
+    system("cls");
     Beep(750, 120);
     cout << "\033[1;36mLatest from " << top->fromUser << ": " << top->text << " (" << top->timestamp << ")\033[0m" << endl;
+    cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // REMOVE THE LATEST MESSAGE FROM A CONVERSATION
 void popMessage() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string other;
+    system("cls");
     cout << "\033[34mWith whom: \033[0m";
     cin >> other;
     cin.ignore(1000, '\n');
     Conversation* conv = findConversation(currentUser->userName, other);
     if (!conv || !conv->stackTop) {
+        system("cls");
         cout << "\033[33mNo messages.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     MessageNode* popped = conv->stackTop;
     conv->stackTop = conv->stackTop->next;
+    system("cls");
     Beep(800, 150);
     cout << "\033[33mPopped: " << popped->fromUser << ": " << popped->text << "\033[0m" << endl;
+    Sleep(500);
     delete popped;
     saveMessagesToFile();
 }
@@ -1179,15 +1260,19 @@ void displayConversation() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string other;
+    system("cls");
     cout << "\033[34mWith whom: \033[0m";
     cin >> other;
     cin.ignore(1000, '\n');
     Conversation* conv = findConversation(currentUser->userName, other);
     if (!conv || !conv->stackTop) {
+        system("cls");
         cout << "\033[33mNo messages.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     system("cls");
@@ -1205,6 +1290,9 @@ void displayConversation() {
         cout << m->text << " \033[90m(" << m->timestamp << ")\033[0m" << endl;
         m = m->next;
     }
+    cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // DELETE ALL CONVERSATIONS INVOLVING A SPECIFIC USER
 void deleteUserMessages(string userName) {
@@ -1235,7 +1323,7 @@ void deleteUserMessages(string userName) {
     }
     saveMessagesToFile();
 }
-// GET HEIGHT OF AN AVL NODE 
+// GET HEIGHT OF AN AVL NODE
 int getHeight(AVLNode* n) {
     if (n != nullptr) {
         return n->height;
@@ -1418,7 +1506,7 @@ void removePostFromAVL(string postID) {
 void removeUserFromAVL(string userName) {
     userAVLRoot = deleteAVL(userAVLRoot, userName);
 }
-// RECURSIVE HELPER FOR GETTING TOP K ELEMENTS 
+// RECURSIVE HELPER FOR GETTING TOP K ELEMENTS
 void getTopKHelper(AVLNode* root, int& cnt, int k, string title, bool& printed) {
     if (!root || cnt >= k) {
         return;
@@ -1438,8 +1526,10 @@ void getTopK(AVLNode* root, int k, string title) {
     if (!root) {
         system("cls");
         cout << "\033[33mNo data for " << title << ".\033[0m" << endl;
+        Sleep(500);
         return;
     }
+    system("cls");
     int cnt = 0;
     bool printed = false;
     getTopKHelper(root, cnt, k, title, printed);
@@ -1447,6 +1537,8 @@ void getTopK(AVLNode* root, int k, string title) {
         cout << "\033[33mNot enough data.\033[0m" << endl;
     }
     cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // PRINT ALL NODES IN INORDER
 void inorderPrint(AVLNode* root) {
@@ -1460,13 +1552,17 @@ void inorderPrint(AVLNode* root) {
 // DISPLAY ALL NODES SORTED BY KEY
 void inorderDisplay(AVLNode* root, string title) {
     if (!root) {
+        system("cls");
         cout << "\033[33mNo data.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     system("cls");
     cout << "\n\033[1;36m=== SORTED " << title << " ===\033[0m" << endl;
     inorderPrint(root);
     cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // RECURSIVE HELPER FOR RANGE QUERY ON AVL TREE
 void rangeQueryHelper(AVLNode* root, int minV, int maxV, bool& found) {
@@ -1483,9 +1579,12 @@ void rangeQueryHelper(AVLNode* root, int minV, int maxV, bool& found) {
 // DISPLAY NODES WHOSE VALUES FALL WITHIN A GIVEN RANGE
 void rangeQuery(AVLNode* root, int minV, int maxV, string title) {
     if (!root) {
+        system("cls");
         cout << "\033[33mNo data.\033[0m" << endl;
+        Sleep(500);
         return;
     }
+    system("cls");
     cout << "\n\033[1;36m=== " << title << " range [" << minV << "," << maxV << "] ===\033[0m" << endl;
     bool found = false;
     rangeQueryHelper(root, minV, maxV, found);
@@ -1493,6 +1592,8 @@ void rangeQuery(AVLNode* root, int minV, int maxV, string title) {
         cout << "\033[33mNone.\033[0m" << endl;
     }
     cout << endl;
+    cout << "\033[90mPress Enter to continue...\033[0m";
+    cin.get();
 }
 // DELETE ALL POSTS OF A SPECIFIC USER
 void deleteAllUserPosts(string userName) {
@@ -1515,7 +1616,7 @@ void deleteAllUserPosts(string userName) {
     u->postsHead = nullptr;
     savePostsToFile();
 }
-// REMOVE A USER FROM THE FRIENDSHIP GRAPH 
+// REMOVE A USER FROM THE FRIENDSHIP GRAPH
 void removeUserFromGraph(string userName) {
     for (int i = 0; i < TABLE_SIZE; i++) {
         UserNode* u = hashTable[i];
@@ -1557,14 +1658,18 @@ void deleteUser() {
     if (!currentUser) {
         system("cls");
         cout << "\033[31mLogin first.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     char ch;
+    system("cls");
     cout << "\033[33mDelete account? (y/n): \033[0m";
     cin >> ch;
     cin.ignore(1000, '\n');
     if (ch != 'y' && ch != 'Y') {
+        system("cls");
         cout << "\033[33mCancelled.\033[0m" << endl;
+        Sleep(500);
         return;
     }
     string un = currentUser->userName;
@@ -1586,6 +1691,7 @@ void deleteUser() {
     currentUser = nullptr;
     Beep(900, 400);
     cout << "\033[1;32mAccount deleted. You are logged out.\033[0m" << endl;
+    Sleep(500);
     saveUsersToFile();
 }
 // FILE HANDLING FUNCTIONS
@@ -1909,6 +2015,7 @@ void userManagementModule() {
             cout << "\033[31mInvalid Input.\033[0m" << endl;
             cout << "\033[34mTry Again\033[0m" << endl;
             Beep(700, 300);
+            Sleep(500);
             break;
         }
         }
@@ -1954,7 +2061,9 @@ void socialNetworkModule() {
                 BFS(currentUser->userName);
             }
             else {
+                system("cls");
                 cout << "\033[31mLogin first.\033[0m" << endl;
+                Sleep(500);
             }
             break;
         }
@@ -1962,13 +2071,16 @@ void socialNetworkModule() {
             Beep(850, 100);
             if (currentUser) {
                 string t;
+                system("cls");
                 cout << "\033[34mTarget: \033[0m";
                 cin >> t;
                 cin.ignore(1000, '\n');
                 DFS(currentUser->userName, t);
             }
             else {
+                system("cls");
                 cout << "\033[31mLogin first.\033[0m" << endl;
+                Sleep(500);
             }
             break;
         }
@@ -1981,6 +2093,7 @@ void socialNetworkModule() {
             cout << "\033[31mInvalid Input.\033[0m" << endl;
             cout << "\033[34mTry Again\033[0m" << endl;
             Beep(700, 300);
+            Sleep(500);
             break;
         }
         }
@@ -2039,6 +2152,7 @@ void postsModule() {
             cout << "\033[31mInvalid Input.\033[0m" << endl;
             cout << "\033[34mTry Again\033[0m" << endl;
             Beep(700, 300);
+            Sleep(500);
             break;
         }
         }
@@ -2053,7 +2167,7 @@ void displayStoriesMenu() {
     cout << "\033[33m3. Back\033[0m" << endl;
     cout << "\033[34mChoice: \033[0m";
 }
-// HANDLE STORIES MODULE 
+// HANDLE STORIES MODULE
 void storiesModule() {
     int choice;
     do {
@@ -2079,6 +2193,7 @@ void storiesModule() {
             cout << "\033[31mInvalid Input.\033[0m" << endl;
             cout << "\033[34mTry Again\033[0m" << endl;
             Beep(700, 300);
+            Sleep(500);
             break;
         }
         }
@@ -2125,6 +2240,7 @@ void notificationsModule() {
             cout << "\033[31mInvalid Input.\033[0m" << endl;
             cout << "\033[34mTry Again\033[0m" << endl;
             Beep(700, 300);
+            Sleep(500);
             break;
         }
         }
@@ -2177,6 +2293,7 @@ void messagingModule() {
             cout << "\033[31mInvalid Input.\033[0m" << endl;
             cout << "\033[34mTry Again\033[0m" << endl;
             Beep(700, 300);
+            Sleep(500);
             break;
         }
         }
@@ -2224,6 +2341,7 @@ void analyticsModule() {
         }
         case 5: {
             Beep(850, 100);
+            system("cls");
             cout << "\033[34mMin activity: \033[0m";
             mn = getInt();
             cout << "\033[34mMax: \033[0m";
@@ -2233,6 +2351,7 @@ void analyticsModule() {
         }
         case 6: {
             Beep(850, 100);
+            system("cls");
             cout << "\033[34mMin likes: \033[0m";
             mn = getInt();
             cout << "\033[34mMax: \033[0m";
@@ -2249,6 +2368,7 @@ void analyticsModule() {
             cout << "\033[31mInvalid Input.\033[0m" << endl;
             cout << "\033[34mTry Again\033[0m" << endl;
             Beep(700, 300);
+            Sleep(500);
             break;
         }
         }
@@ -2277,7 +2397,7 @@ void displayMainMenu() {
     cout << endl;
     cout << "\033[34mChoice: \033[0m";
 }
-// MAIN 
+// MAIN
 int main() {
     initializeHashTable();
     loadAllData();
@@ -2332,12 +2452,14 @@ int main() {
             Beep(1000, 500);
             cout << "\n\033[35mGoodbye!\033[0m" << endl;
             cout << endl;
+            Sleep(500);
             break;
         }
         default: {
             cout << "\033[31mInvalid Input.\033[0m" << endl;
             cout << "\033[34mTry Again\033[0m" << endl;
             Beep(700, 300);
+            Sleep(500);
             break;
         }
         }
